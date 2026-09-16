@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-6dee30f6-898f-488b-9aa7-68b2a95cceac/styles.css">
+<script src="_ds/organic-6dee30f6-898f-488b-9aa7-68b2a95cceac/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-neutral-200)}
+a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
+.tm-scroll{-ms-overflow-style:none;scrollbar-width:none}
+.tm-scroll::-webkit-scrollbar{display:none}
+.tm-tap{cursor:pointer;transition:transform .12s ease,background .15s ease,opacity .15s ease}
+.tm-tap:active{transform:scale(.98)}
+@keyframes tm-rise{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes tm-sheet{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes tm-pop{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+<div style="min-height:100vh;padding:44px 40px 64px;display:flex;flex-direction:column;gap:26px;align-items:flex-start;font-family:var(--font-body);color:var(--color-text)">
+  <div style="max-width:580px">
+    <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:8px">Tappable prototype · iPhone</div>
+    <h1 style="font-size:38px;margin:0 0 10px">Thank you, me.</h1>
+    <p style="font-size:14px;line-height:1.6;color:var(--color-neutral-700);margin:0">A daily note to yourself for the good things you did. Tap through the whole flow: start, write a note (pick a suggestion or type your own), save it, then look at the journal and your profile.</p>
+  </div>
+
+  <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402px,874px">
+    <div class="tm-scroll" style="position:relative;min-height:100%;display:flex;flex-direction:column;background:var(--color-bg);font-family:var(--font-body);color:var(--color-text)">
+
+      <sc-if value="{{ isOnboard }}" hint-placeholder-val="{{ true }}">
+        <div style="flex:1;display:flex;flex-direction:column;padding:78px 26px 40px">
+          <div style="width:112px;height:112px;border-radius:999px;background:var(--color-accent-200);display:flex;align-items:center;justify-content:center;margin-bottom:30px">
+            <div style="width:62px;height:62px;border-radius:999px;background:var(--color-accent-2-300)"></div>
+          </div>
+          <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:10px">A daily practice</div>
+          <h2 style="font-size:36px;margin:0 0 14px;line-height:1.05">Thank<br>yourself<br>first.</h2>
+          <p style="font-size:15px;line-height:1.65;color:var(--color-neutral-800);margin:0 0 6px;max-width:300px">Each evening, write down something you did well and say thanks for it. Nobody else sees it.</p>
+          <div style="flex:1;min-height:34px"></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <button class="btn btn-primary btn-block tm-tap" onClick="{{ begin }}" style="min-height:52px;font-size:16px;margin:0">Write today's note</button>
+            <button class="btn btn-secondary btn-block tm-tap" onClick="{{ beginJournal }}" style="min-height:48px;margin:0">I've kept one before</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isToday }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:62px 22px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+          <div>
+            <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:6px">{{ dateLabel }}</div>
+            <h2 style="font-size:31px;margin:0;line-height:1.08">Thank you,<br>me.</h2>
+          </div>
+          <div style="width:62px;height:62px;border-radius:999px;background:var(--color-accent-2-200);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;line-height:1">
+            <span style="font-family:var(--font-heading);font-size:19px;color:var(--color-accent-2-800)">{{ streak }}</span>
+            <span style="font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-2-800);margin-top:3px">days</span>
+          </div>
+        </div>
+
+        <div style="padding:22px 22px 0">
+          <div class="card elev-sm tm-tap" onClick="{{ openCompose }}" style="background:var(--color-accent-200);padding:20px;gap:14px">
+            <div style="font-family:var(--font-heading);font-size:21px;line-height:1.25;color:var(--color-accent-900)">{{ prompt }}</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:34px;height:34px;border-radius:999px;background:var(--color-accent);color:var(--color-bg);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none;padding-bottom:2px">+</span>
+              <span style="font-size:13px;color:var(--color-accent-900)">Add a note</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:26px 22px 4px;display:flex;align-items:baseline;justify-content:space-between">
+          <h4 style="font-size:15px;margin:0">Today</h4>
+          <span style="font-size:11.5px;color:var(--color-neutral-600)">{{ todayCount }}</span>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;padding:8px 22px 0">
+          <sc-for list="{{ todayNotes }}" as="n" hint-placeholder-count="2">
+            <div class="card elev-sm" style="padding:16px 18px;gap:9px;animation:tm-rise .3s ease both">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span class="tag" style="font-size:10px;padding:3px 10px;background:{{ n.bg }};color:{{ n.fg }}">{{ n.kind }}</span>
+                <span style="font-size:11px;color:var(--color-neutral-600);margin-left:auto">{{ n.time }}</span>
+              </div>
+              <div style="font-size:14.5px;line-height:1.6">{{ n.text }}</div>
+            </div>
+          </sc-for>
+          <sc-if value="{{ todayEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:28px 22px;border-radius:30px;border:1.5px dashed var(--color-neutral-400);text-align:center">
+              <div style="font-family:var(--font-heading);font-size:17px;margin-bottom:5px">Nothing yet today</div>
+              <div style="font-size:13px;color:var(--color-neutral-700)">Small counts. Tying up one loose end counts.</div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="padding:28px 22px 0">
+          <div class="card" style="background:var(--color-accent-2-100);padding:18px 20px;gap:12px">
+            <div style="display:flex;align-items:baseline;gap:9px">
+              <span style="font-family:var(--font-heading);font-size:18px;color:var(--color-accent-2-900)">Pass it on</span>
+              <span style="font-size:11.5px;color:var(--color-accent-2-800)">something kind for someone else</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <sc-for list="{{ kindActs }}" as="a" hint-placeholder-count="3">
+                <button class="tm-tap" onClick="{{ a.onPick }}" style="display:flex;align-items:center;gap:11px;text-align:left;cursor:pointer;border:1px solid {{ a.line }};background:{{ a.bg }};border-radius:22px;padding:11px 14px;font-family:var(--font-body);font-size:13px;line-height:1.45;color:var(--color-accent-2-900)">
+                  <span style="width:20px;height:20px;border-radius:999px;flex:none;background:{{ a.dot }}"></span>
+                  <span style="flex:1">{{ a.text }}</span>
+                  <span style="font-size:11px;color:var(--color-accent-2-800);flex:none">{{ a.state }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="height:120px"></div>
+      </sc-if>
+
+      <sc-if value="{{ isJournal }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:62px 22px 0">
+          <div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:6px">September</div>
+          <h2 style="font-size:31px;margin:0 0 18px">The journal</h2>
+          <div class="card" style="background:var(--color-accent-2-100);flex-direction:row;align-items:center;gap:16px;padding:18px">
+            <div style="width:58px;height:58px;border-radius:999px;background:var(--color-accent-2-300);display:flex;align-items:center;justify-content:center;flex:none">
+              <span style="font-family:var(--font-heading);font-size:20px;color:var(--color-accent-2-900)">{{ streak }}</span>
+            </div>
+            <div style="font-size:13px;line-height:1.55;color:var(--color-accent-2-900)">{{ streakLine }}</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;padding:22px 22px 0">
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="4">
+            <div>
+              <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:8px">
+                <span style="font-family:var(--font-heading);font-size:16px">{{ d.label }}</span>
+                <span style="font-size:11px;color:var(--color-neutral-600)">{{ d.count }}</span>
+                <span style="flex:1;height:1px;background:var(--color-divider)"></span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ d.notes }}" as="n" hint-placeholder-count="2">
+                  <div class="card elev-sm" style="padding:14px 16px;gap:7px">
+                    <span class="tag" style="font-size:10px;padding:2px 9px;align-self:flex-start;background:{{ n.bg }};color:{{ n.fg }}">{{ n.kind }}</span>
+                    <div style="font-size:13.5px;line-height:1.55">{{ n.text }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="height:120px"></div>
+      </sc-if>
+
+      <sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:62px 22px 0;display:flex;align-items:center;gap:16px">
+          <div class="washed" style="width:78px;height:78px;border-radius:999px;background:var(--color-accent-300);display:flex;align-items:center;justify-content:center;flex:none">
+            <span style="font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(32,30,29,.5)">photo</span>
+          </div>
+          <div>
+            <h2 style="font-size:26px;margin:0 0 3px">You</h2>
+            <div style="font-size:12.5px;color:var(--color-neutral-700)">Keeping notes since June 2026</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:9px;padding:22px 22px 0">
+          <div class="card" style="flex:1;gap:2px;padding:15px 14px;background:var(--color-accent-100)">
+            <span style="font-family:var(--font-heading);font-size:21px">{{ totalNotes }}</span>
+            <span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-800)">Notes</span>
+          </div>
+          <div class="card" style="flex:1;gap:2px;padding:15px 14px;background:var(--color-accent-2-100)">
+            <span style="font-family:var(--font-heading);font-size:21px">41</span>
+            <span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-2-800)">Days kept</span>
+          </div>
+          <div class="card" style="flex:1;gap:2px;padding:15px 14px;background:var(--color-neutral-100)">
+            <span style="font-family:var(--font-heading);font-size:21px">12</span>
+            <span style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700)">Longest</span>
+          </div>
+        </div>
+
+        <div style="padding:26px 22px 0">
+          <h4 style="font-size:15px;margin:0 0 12px">What you thank yourself for</h4>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ breakdown }}" as="b" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:12px">
+                <span style="font-size:13px;width:82px;flex:none">{{ b.kind }}</span>
+                <span style="flex:1;height:10px;border-radius:999px;background:var(--color-neutral-300);overflow:hidden">
+                  <span style="display:block;height:100%;border-radius:999px;width:{{ b.width }};background:{{ b.color }}"></span>
+                </span>
+                <span style="font-size:11.5px;color:var(--color-neutral-700);width:30px;text-align:right;flex:none">{{ b.pct }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="padding:28px 22px 0">
+          <h4 style="font-size:15px;margin:0 0 10px">Settings</h4>
+          <div class="card" style="padding:4px 18px;gap:0;background:var(--color-surface)">
+            <div style="display:flex;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid var(--color-divider)">
+              <div style="flex:1">
+                <div style="font-size:14px">Evening reminder</div>
+                <div style="font-size:11.5px;color:var(--color-neutral-600)">{{ reminderTime }}</div>
+              </div>
+              <span class="tm-tap" onClick="{{ toggleReminder }}" style="width:48px;height:28px;border-radius:999px;flex:none;padding:3px;display:flex;background:{{ reminderTrack }};justify-content:{{ reminderAlign }}">
+                <span style="width:22px;height:22px;border-radius:999px;background:var(--color-bg);box-shadow:var(--shadow-sm)"></span>
+              </span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;padding:15px 0;border-bottom:1px solid var(--color-divider)">
+              <div style="flex:1">
+                <div style="font-size:14px">Keep notes private</div>
+                <div style="font-size:11.5px;color:var(--color-neutral-600)">{{ privateLine }}</div>
+              </div>
+              <span class="tm-tap" onClick="{{ togglePrivate }}" style="width:48px;height:28px;border-radius:999px;flex:none;padding:3px;display:flex;background:{{ privateTrack }};justify-content:{{ privateAlign }}">
+                <span style="width:22px;height:22px;border-radius:999px;background:var(--color-bg);box-shadow:var(--shadow-sm)"></span>
+              </span>
+            </div>
+            <div class="tm-tap" onClick="{{ exportNotes }}" style="display:flex;align-items:center;gap:12px;padding:15px 0">
+              <div style="flex:1;font-size:14px">{{ exportLabel }}</div>
+              <span style="font-size:15px;color:var(--color-accent)">→</span>
+            </div>
+          </div>
+        </div>
+        <div style="height:120px"></div>
+      </sc-if>
+
+      <sc-if value="{{ showTabs }}" hint-placeholder-val="{{ false }}">
+        <div style="position:sticky;bottom:0;margin-top:auto;padding:10px 22px 26px;background:linear-gradient(to top,var(--color-bg) 62%,transparent)">
+          <div class="elev-md" style="display:flex;background:var(--color-neutral-900);border-radius:999px;padding:6px">
+            <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="3">
+              <button class="tm-tap" onClick="{{ t.onPick }}" style="flex:1;border:0;cursor:pointer;border-radius:999px;padding:11px 4px;font-family:var(--font-heading);font-size:13px;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ composing }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;justify-content:flex-end;background:color-mix(in srgb,var(--color-neutral-900) 42%,transparent)">
+          <div class="tm-tap" onClick="{{ closeCompose }}" style="flex:1"></div>
+          <div style="background:var(--color-bg);border-top-left-radius:36px;border-top-right-radius:36px;padding:22px 22px 30px;animation:tm-sheet .28s cubic-bezier(.2,.8,.2,1) both;box-shadow:var(--shadow-lg)">
+            <div style="display:flex;align-items:center;margin-bottom:14px">
+              <h4 style="font-size:19px;margin:0;flex:1">A note to yourself</h4>
+              <button class="btn btn-secondary tm-tap" onClick="{{ closeCompose }}" style="width:34px;height:34px;padding:0;font-size:15px">✕</button>
+            </div>
+            <div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:8px">What was it about?</div>
+            <div class="tm-scroll" style="display:flex;gap:7px;overflow-x:auto;padding-bottom:4px">
+              <sc-for list="{{ kinds }}" as="k" hint-placeholder-count="5">
+                <button class="tm-tap" onClick="{{ k.onPick }}" style="flex:none;cursor:pointer;border-radius:999px;font-family:var(--font-body);font-size:12.5px;padding:8px 15px;border:1px solid {{ k.line }};background:{{ k.bg }};color:{{ k.fg }}">{{ k.kind }}</button>
+              </sc-for>
+            </div>
+            <textarea class="input" rows="3" placeholder="Thank you, me, for…" value="{{ draft }}" onChange="{{ onDraft }}" style="margin-top:14px;border-radius:26px;min-height:96px;font-size:14.5px;line-height:1.55;padding:14px 16px;resize:none"></textarea>
+            <div style="font-size:11.5px;color:var(--color-neutral-600);margin:12px 0 7px">Or borrow one</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <sc-for list="{{ suggestions }}" as="s" hint-placeholder-count="3">
+                <button class="tm-tap" onClick="{{ s.onPick }}" style="text-align:left;cursor:pointer;border:1px solid var(--color-divider);background:var(--color-surface);border-radius:22px;padding:11px 15px;font-family:var(--font-body);font-size:13px;line-height:1.5;color:var(--color-text)">{{ s.text }}</button>
+              </sc-for>
+            </div>
+            <button class="btn btn-primary btn-block tm-tap" onClick="{{ save }}" disabled="{{ cantSave }}" style="min-height:50px;font-size:15px;margin-top:16px">Save this note</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ saved }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:40px;text-align:center;background:var(--color-accent-100)">
+          <div style="width:118px;height:118px;border-radius:999px;background:var(--color-accent-2-300);display:flex;align-items:center;justify-content:center;animation:tm-pop .42s cubic-bezier(.2,.9,.25,1) both">
+            <div style="width:54px;height:54px;border-radius:999px;background:var(--color-accent)"></div>
+          </div>
+          <h2 style="font-size:30px;margin:0">Noted.</h2>
+          <p style="font-size:14.5px;line-height:1.6;color:var(--color-neutral-800);margin:0;max-width:260px">{{ savedLine }}</p>
+          <button class="btn btn-secondary tm-tap" onClick="{{ dismissSaved }}" style="min-height:46px;padding-inline:26px">Back to today</button>
+        </div>
+      </sc-if>
+
+    </div>
+  </x-import>
+
+  <p style="max-width:580px;font-size:12.5px;line-height:1.6;color:var(--color-neutral-700);margin:0">Next steps: a weekly look-back that resurfaces one old note, a lock screen widget with the evening prompt, and real photography in place of the profile and empty-state placeholders.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:1060}}">
+const KINDS = {
+  Kindness: ['var(--color-accent-100)', 'var(--color-accent-800)', 'var(--color-accent-500)'],
+  Effort:   ['var(--color-accent-2-100)', 'var(--color-accent-2-800)', 'var(--color-accent-2-500)'],
+  Courage:  ['var(--color-accent-200)', 'var(--color-accent-900)', 'var(--color-accent-700)'],
+  Rest:     ['var(--color-neutral-100)', 'var(--color-neutral-800)', 'var(--color-neutral-500)'],
+  Growth:   ['var(--color-accent-2-200)', 'var(--color-accent-2-900)', 'var(--color-accent-2-700)']
+};
+
+const PAST = [
+  { label: 'Yesterday', notes: [
+    { kind: 'Effort', text: 'Thank you, me, for finishing the messy part of the report before it grew teeth.' },
+    { kind: 'Rest', text: 'Thank you, me, for closing the laptop at nine and meaning it.' }
+  ] },
+  { label: 'Sunday', notes: [
+    { kind: 'Kindness', text: 'Thank you, me, for calling Dad back the same day.' }
+  ] },
+  { label: 'Saturday', notes: [
+    { kind: 'Courage', text: 'Thank you, me, for saying no to the extra shift without apologising twice.' },
+    { kind: 'Growth', text: 'Thank you, me, for asking the question I thought was too basic to ask.' }
+  ] }
+];
+
+const KIND_ACTS = [
+  'Text one person to say what you appreciate about them.',
+  'Let someone go ahead of you today, without making a point of it.',
+  'Ask a colleague what they are stuck on, then actually help.'
+];
+
+const SUGGESTIONS = [
+  'Thank you, me, for showing up when I did not feel like it.',
+  'Thank you, me, for being patient with someone who needed it.',
+  'Thank you, me, for taking the walk instead of the scroll.'
+];
+
+class Component extends DCLogic {
+  state = {
+    screen: 'onboard',
+    composing: false,
+    saved: false,
+    draft: '',
+    kind: 'Kindness',
+    doneActs: [],
+    reminder: true,
+    private: true,
+    exported: false,
+    notes: [
+      { kind: 'Growth', time: '2:10 pm', text: 'Thank you, me, for rewriting that email calmly instead of sending the first version.' },
+      { kind: 'Kindness', time: '8:45 am', text: 'Thank you, me, for making the coffee for both of us.' }
+    ]
+  };
+
+  tint(kind) {
+    const c = KINDS[kind] || KINDS.Kindness;
+    return { bg: c[0], fg: c[1], color: c[2] };
+  }
+
+  go(screen) { this.setState({ screen: screen, composing: false }); }
+
+  save = () => {
+    const text = this.state.draft.trim();
+    if (!text) return;
+    const note = { kind: this.state.kind, time: '9:24 pm', text: text };
+    this.setState(s => ({ notes: [note].concat(s.notes), composing: false, saved: true, draft: '' }));
+  };
+
+  renderVals() {
+    const s = this.state;
+    const notes = s.notes.map(n => Object.assign({}, n, this.tint(n.kind)));
+    const streak = 4;
+
+    const tabs = [
+      { key: 'today', label: 'Today' },
+      { key: 'journal', label: 'Journal' },
+      { key: 'profile', label: 'You' }
+    ].map(t => ({
+      label: t.label,
+      onPick: () => this.go(t.key),
+      bg: s.screen === t.key ? 'var(--color-accent)' : 'transparent',
+      fg: s.screen === t.key ? 'var(--color-bg)' : 'var(--color-neutral-400)'
+    }));
+
+    const kinds = Object.keys(KINDS).map(k => {
+      const on = s.kind === k;
+      const c = this.tint(k);
+      return {
+        kind: k,
+        onPick: () => this.setState({ kind: k }),
+        bg: on ? c.color : 'transparent',
+        fg: on ? 'var(--color-bg)' : 'var(--color-neutral-800)',
+        line: on ? c.color : 'var(--color-divider)'
+      };
+    });
+
+    const breakdown = [
+      { kind: 'Kindness', pct: 34 }, { kind: 'Effort', pct: 27 },
+      { kind: 'Rest', pct: 21 }, { kind: 'Courage', pct: 11 }, { kind: 'Growth', pct: 7 }
+    ].map(b => ({ kind: b.kind, pct: b.pct + '%', width: b.pct + '%', color: this.tint(b.kind).color }));
+
+    return {
+      isOnboard: s.screen === 'onboard',
+      isToday: s.screen === 'today',
+      isJournal: s.screen === 'journal',
+      isProfile: s.screen === 'profile',
+      showTabs: s.screen !== 'onboard' && !s.saved,
+      tabs: tabs,
+
+      dateLabel: 'Tuesday 16 September',
+      prompt: notes.length ? 'Anything else worth thanking yourself for?' : 'What did you do well today?',
+      streak: streak,
+      streakLine: streak + ' evenings in a row. The longest run so far was twelve, last July.',
+      todayNotes: notes,
+      todayEmpty: notes.length === 0,
+      todayCount: notes.length === 1 ? '1 note' : notes.length + ' notes',
+
+      kindActs: KIND_ACTS.map((t, i) => {
+        const done = s.doneActs.indexOf(i) > -1;
+        return {
+          text: t,
+          state: done ? 'done' : '',
+          bg: done ? 'var(--color-accent-2-200)' : 'transparent',
+          line: done ? 'var(--color-accent-2-400)' : 'var(--color-divider)',
+          dot: done ? 'var(--color-accent-2-600)' : 'var(--color-accent-2-300)',
+          onPick: () => this.setState(p => ({
+            doneActs: p.doneActs.indexOf(i) > -1 ? p.doneActs.filter(x => x !== i) : p.doneActs.concat(i)
+          }))
+        };
+      }),
+
+      days: PAST.map(d => ({
+        label: d.label,
+        count: d.notes.length === 1 ? '1 note' : d.notes.length + ' notes',
+        notes: d.notes.map(n => Object.assign({}, n, this.tint(n.kind)))
+      })),
+
+      totalNotes: 128 + notes.length,
+      breakdown: breakdown,
+      reminderTime: s.reminder ? 'Every day at 9:00 pm' : 'Off — you decide when',
+      reminderTrack: s.reminder ? 'var(--color-accent)' : 'var(--color-neutral-400)',
+      reminderAlign: s.reminder ? 'flex-end' : 'flex-start',
+      privateLine: s.private ? 'Nothing leaves this phone' : 'Synced to your account',
+      privateTrack: s.private ? 'var(--color-accent-2-500)' : 'var(--color-neutral-400)',
+      privateAlign: s.private ? 'flex-end' : 'flex-start',
+      exportLabel: s.exported ? 'Sent to your files' : 'Export all notes',
+      toggleReminder: () => this.setState(p => ({ reminder: !p.reminder })),
+      togglePrivate: () => this.setState(p => ({ private: !p.private })),
+      exportNotes: () => this.setState({ exported: true }),
+
+      begin: () => this.setState({ screen: 'today', composing: true }),
+      beginJournal: () => this.go('journal'),
+      openCompose: () => this.setState({ composing: true }),
+      closeCompose: () => this.setState({ composing: false }),
+      composing: s.composing,
+      draft: s.draft,
+      onDraft: e => this.setState({ draft: e.target.value }),
+      cantSave: s.draft.trim().length === 0,
+      kinds: kinds,
+      suggestions: SUGGESTIONS.map(t => ({ text: t, onPick: () => this.setState({ draft: t }) })),
+      save: this.save,
+
+      saved: s.saved,
+      savedLine: 'That is ' + (notes.length) + ' today. It stays here for you to find again.',
+      dismissSaved: () => this.setState({ saved: false, screen: 'today' })
+    };
+  }
+}
+</script>
+</body>
+</html>
