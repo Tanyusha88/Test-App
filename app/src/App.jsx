@@ -28,6 +28,7 @@ export default function App() {
   const [doneActsByDay, setDoneActsByDay] = usePersistentState('doneActs', {});
   const [reminder, setReminder] = usePersistentState('reminder', true);
   const [privateNotes, setPrivateNotes] = usePersistentState('private', true);
+  const [photo, setPhoto] = usePersistentState('photo', null);
 
   const [screen, setScreen] = useState(onboarded ? 'today' : 'onboard');
   const [composing, setComposing] = useState(false);
@@ -171,6 +172,8 @@ export default function App() {
             onTogglePrivate={() => setPrivateNotes((v) => !v)}
             exported={exported}
             onExport={exportNotes}
+            photo={photo}
+            onPhoto={setPhoto}
           />
         )}
 

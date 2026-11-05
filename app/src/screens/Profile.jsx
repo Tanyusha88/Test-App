@@ -1,3 +1,6 @@
+import { useRef, useState } from 'react';
+import { fileToSquareDataUrl } from '../lib/image.js';
+
 export default function Profile({
   totalNotes,
   daysKept,
@@ -10,6 +13,8 @@ export default function Profile({
   onTogglePrivate,
   exported,
   onExport,
+  photo,
+  onPhoto,
 }) {
   const reminderTime = reminder ? 'Every day at 9:00 pm' : 'Off — you decide when';
   const reminderTrack = reminder ? 'var(--color-accent)' : 'var(--color-neutral-400)';
@@ -19,23 +24,74 @@ export default function Profile({
   const privateAlign = privateNotes ? 'flex-end' : 'flex-start';
   const exportLabel = exported ? 'Downloaded' : 'Export all notes';
 
+  const fileInputRef = useRef(null);
+  const [busy, setBusy] = useState(false);
+
+  const pickPhoto = () => fileInputRef.current?.click();
+
+  const onFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    setBusy(true);
+    try {
+      onPhoto(await fileToSquareDataUrl(file));
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <>
       <div style={{ padding: '40px 22px 0', display: 'flex', alignItems: 'center', gap: 16 }}>
+        <input ref={fileInputRef} type="file" accept="image/*" onChange={onFileChange} style={{ display: 'none' }} />
         <div
-          className="washed"
-          style={{
-            width: 78,
-            height: 78,
-            borderRadius: 999,
-            background: 'var(--color-accent-300)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flex: 'none',
-          }}
+          className="tm-tap"
+          onClick={pickPhoto}
+          style={{ position: 'relative', width: 78, height: 78, flex: 'none' }}
         >
-          <span style={{ fontSize: 8, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(32,30,29,.5)' }}>photo</span>
+          <div
+            className={photo ? undefined : 'washed'}
+            style={{
+              width: 78,
+              height: 78,
+              borderRadius: 999,
+              background: photo ? undefined : 'var(--color-accent-300)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+            }}
+          >
+            {photo ? (
+              <img className="washed" src={photo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              <span style={{ fontSize: 8, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(32,30,29,.5)' }}>
+                {busy ? '…' : 'photo'}
+              </span>
+            )}
+          </div>
+          <span
+            style={{
+              position: 'absolute',
+              right: -2,
+              bottom: -2,
+              width: 26,
+              height: 26,
+              borderRadius: 999,
+              background: 'var(--color-accent)',
+              color: 'var(--color-bg)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 15,
+              paddingBottom: 1,
+              boxShadow: 'var(--shadow-sm)',
+              border: '2px solid var(--color-bg)',
+            }}
+          >
+            +
+          </span>
         </div>
         <div>
           <h2 style={{ fontSize: 26, margin: '0 0 3px' }}>You</h2>
