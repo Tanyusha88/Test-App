@@ -1,26 +1,26 @@
-// Reads an image file, center-crops it to a square, and downsizes it to
-// `size`x`size` so a profile photo doesn't blow up localStorage (a
-// phone-camera photo can be several MB; this keeps it well under 50KB).
-export function fileToSquareDataUrl(file, size = 256) {
+// Loads an image file into an <img> element the crop sheet can measure
+// and draw from. Caller is responsible for revoking the object URL once
+// done with the image (crop sheet does this on unmount/cancel/save).
+export function loadImageFile(file) {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = () => reject(reader.error);
-    reader.onload = () => {
-      const img = new Image();
-      img.onerror = () => reject(new Error('Could not read image'));
-      img.onload = () => {
-        const side = Math.min(img.width, img.height);
-        const sx = (img.width - side) / 2;
-        const sy = (img.height - side) / 2;
-        const canvas = document.createElement('canvas');
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, sx, sy, side, side, 0, 0, size, size);
-        resolve(canvas.toDataURL('image/jpeg', 0.85));
-      };
-      img.src = reader.result;
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => resolve({ img, url });
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('Could not read image'));
     };
-    reader.readAsDataURL(file);
+    img.src = url;
   });
+}
+
+// Draws the given source rect (in the image's natural pixel coordinates)
+// scaled to fill an outputSize x outputSize square, as a JPEG data URL.
+export function cropToDataUrl(img, { sx, sy, sSize }, outputSize = 256) {
+  const canvas = document.createElement('canvas');
+  canvas.width = outputSize;
+  canvas.height = outputSize;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, sx, sy, sSize, sSize, 0, 0, outputSize, outputSize);
+  return canvas.toDataURL('image/jpeg', 0.85);
 }

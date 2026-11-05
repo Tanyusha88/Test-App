@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { fileToSquareDataUrl } from '../lib/image.js';
+import PhotoCropSheet from '../components/PhotoCropSheet.jsx';
 
 export default function Profile({
   totalNotes,
@@ -25,20 +25,14 @@ export default function Profile({
   const exportLabel = exported ? 'Downloaded' : 'Export all notes';
 
   const fileInputRef = useRef(null);
-  const [busy, setBusy] = useState(false);
+  const [cropFile, setCropFile] = useState(null);
 
   const pickPhoto = () => fileInputRef.current?.click();
 
-  const onFileChange = async (e) => {
+  const onFileChange = (e) => {
     const file = e.target.files?.[0];
     e.target.value = '';
-    if (!file) return;
-    setBusy(true);
-    try {
-      onPhoto(await fileToSquareDataUrl(file));
-    } finally {
-      setBusy(false);
-    }
+    if (file) setCropFile(file);
   };
 
   return (
@@ -67,7 +61,7 @@ export default function Profile({
               <img className="washed" src={photo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             ) : (
               <span style={{ fontSize: 8, letterSpacing: '.1em', textTransform: 'uppercase', color: 'rgba(32,30,29,.5)' }}>
-                {busy ? '…' : 'photo'}
+                photo
               </span>
             )}
           </div>
@@ -195,6 +189,17 @@ export default function Profile({
         </div>
       </div>
       <div style={{ height: 120 }} />
+
+      {cropFile && (
+        <PhotoCropSheet
+          file={cropFile}
+          onCancel={() => setCropFile(null)}
+          onSave={(dataUrl) => {
+            onPhoto(dataUrl);
+            setCropFile(null);
+          }}
+        />
+      )}
     </>
   );
 }
