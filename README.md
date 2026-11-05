@@ -1,10 +1,14 @@
-# CODING AGENTS: READ THIS FIRST
+# Thank you, me.
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+**Status: implemented.** The design below has been built out as a real app in [`app/`](app/) — see [`app/README.md`](app/README.md) for setup and run instructions. The rest of this document is the original Claude Design handoff bundle, kept for provenance (design intent, source prototype, design tokens).
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+## Original handoff bundle notes
 
-## What you should do — IMPORTANT
+This started as a **handoff bundle** from Claude Design (claude.ai/design).
+
+A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent could implement the designs for real.
+
+### What a coding agent should do — IMPORTANT
 
 **Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
 
@@ -12,14 +16,15 @@ A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported t
 
 **If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
 
-## About the design files
+### About the design files
 
 The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
 
 **Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
 
-## Bundle contents
+### Bundle contents
 
 - `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Thank you, Me App` project files (HTML prototypes, assets, components)
+- `chats/` — conversation transcripts between the user and the design assistant
+- `project/` — the original `Thank you, Me App` design files (HTML prototype, assets, design-system tokens)
+- `app/` — the implemented app (Vite + React) — **start here to run it**
