@@ -1,16 +1,26 @@
-# React + Vite
+# Thank you, me.
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A daily self-thanks journal — write yourself a short note each evening
+for something you did well, build a streak, and look back on it later.
+Built with Vite + React, using the Organic design system tokens from
+`project/_ds/`. Notes and settings persist to `localStorage`.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Requires Node.js (v18+) and npm.
 
-## React Compiler
+```bash
+npm install     # install dependencies
+npm run dev     # start the dev server (prints a local URL, e.g. http://localhost:5173)
+npm run build   # production build, output to dist/
+npm run preview # serve the production build locally
+npm run lint    # run oxlint
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project layout
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- `src/screens/` — the four main screens: Onboard, Today, Journal, Profile
+- `src/components/` — ComposeSheet, SavedOverlay, TabBar
+- `src/lib/` — seed data, date/streak helpers, id generation
+- `src/hooks/usePersistentState.js` — localStorage-backed state
+- `src/styles/tokens.css` — the Organic design system's tokens and component classes
