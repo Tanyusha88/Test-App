@@ -9,7 +9,7 @@ export default function Today({ now, streak, todayNotes, kindActs, onOpenCompose
     <>
       <div style={{ padding: '40px 22px 0', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 14 }}>
         <div>
-          <div style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--color-accent-700)', marginBottom: 6 }}>
+          <div style={{ fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--color-accent-700)', marginBottom: 6 }}>
             {formatHeaderDate(now)}
           </div>
           <h2 style={{ fontSize: 31, margin: 0, lineHeight: 1.08 }}>
@@ -74,7 +74,7 @@ export default function Today({ now, streak, todayNotes, kindActs, onOpenCompose
         {todayNotes.map((n) => (
           <div key={n.id} className="card elev-sm" style={{ padding: '16px 18px', gap: 9, animation: 'tm-rise .3s ease both' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span className="tag" style={{ fontSize: 10, padding: '3px 10px', background: n.bg, color: n.fg }}>
+              <span className="tag" style={{ fontSize: 10, color: n.color }}>
                 {n.kind}
               </span>
               <span style={{ fontSize: 11, color: 'var(--color-neutral-600)', marginLeft: 'auto' }}>{n.time}</span>
@@ -83,7 +83,7 @@ export default function Today({ now, streak, todayNotes, kindActs, onOpenCompose
           </div>
         ))}
         {todayEmpty && (
-          <div style={{ padding: '28px 22px', borderRadius: 30, border: '1.5px dashed var(--color-neutral-400)', textAlign: 'center' }}>
+          <div style={{ padding: '28px 22px', borderRadius: 2, border: '1px solid var(--color-divider)', textAlign: 'center' }}>
             <div style={{ fontFamily: 'var(--font-heading)', fontSize: 17, marginBottom: 5 }}>Nothing yet today</div>
             <div style={{ fontSize: 13, color: 'var(--color-neutral-700)' }}>Small counts. Tying up one loose end counts.</div>
           </div>
@@ -110,7 +110,7 @@ export default function Today({ now, streak, todayNotes, kindActs, onOpenCompose
                   cursor: 'pointer',
                   border: `1px solid ${a.line}`,
                   background: a.bg,
-                  borderRadius: 22,
+                  borderRadius: 2,
                   padding: '11px 14px',
                   fontFamily: 'var(--font-body)',
                   fontSize: 13,

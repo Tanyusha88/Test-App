@@ -11,7 +11,7 @@ export default function Journal({ streak, longestStreak, days, now }) {
   return (
     <>
       <div style={{ padding: '40px 22px 0' }}>
-        <div style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--color-accent-700)', marginBottom: 6 }}>
+        <div style={{ fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--color-accent-700)', marginBottom: 6 }}>
           {formatMonth(now)}
         </div>
         <h2 style={{ fontSize: 31, margin: '0 0 18px' }}>The journal</h2>
@@ -47,10 +47,7 @@ export default function Journal({ streak, longestStreak, days, now }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {d.notes.map((n) => (
                 <div key={n.id} className="card elev-sm" style={{ padding: '14px 16px', gap: 7 }}>
-                  <span
-                    className="tag"
-                    style={{ fontSize: 10, padding: '2px 9px', alignSelf: 'flex-start', background: n.bg, color: n.fg }}
-                  >
+                  <span className="tag" style={{ fontSize: 10, alignSelf: 'flex-start', color: n.color }}>
                     {n.kind}
                   </span>
                   <div style={{ fontSize: 13.5, lineHeight: 1.55 }}>{n.text}</div>
@@ -61,7 +58,7 @@ export default function Journal({ streak, longestStreak, days, now }) {
         ))}
 
         {days.length === 0 && (
-          <div style={{ padding: '28px 22px', borderRadius: 30, border: '1.5px dashed var(--color-neutral-400)', textAlign: 'center' }}>
+          <div style={{ padding: '28px 22px', borderRadius: 2, border: '1px solid var(--color-divider)', textAlign: 'center' }}>
             <div style={{ fontFamily: 'var(--font-heading)', fontSize: 17, marginBottom: 5 }}>Nothing here yet</div>
             <div style={{ fontSize: 13, color: 'var(--color-neutral-700)' }}>Past days will collect here as you keep writing.</div>
           </div>

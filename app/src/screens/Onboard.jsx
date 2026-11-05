@@ -18,7 +18,7 @@ export default function Onboard({ onBegin, onBeginJournal }) {
       <div
         style={{
           fontSize: 10,
-          letterSpacing: '.14em',
+          letterSpacing: '.18em',
           textTransform: 'uppercase',
           color: 'var(--color-accent-700)',
           marginBottom: 10,

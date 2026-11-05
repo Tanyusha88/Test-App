@@ -1,48 +1,52 @@
-/* Organic — design-system tokens and component classes. This file is the source of truth for the system's look; retune it here and see readme.md. */
-@import url('https://fonts.googleapis.com/css2?family=Caprasimo:wght@400&family=Figtree:wght@400;600;700&display=swap');
+/* Gold & Bordeaux — this app's own theme, evolved from the Organic design
+   system in project/_ds/ but now a different visual direction (sharp,
+   editorial, bordeaux+gold on ivory) rather than Organic's soft rounded
+   warmth. Token names are kept compatible with Organic's so the component
+   layer below didn't need restructuring, only retuning. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Figtree:wght@400;500;600;700&display=swap');
 
 :root {
-  --color-bg: #f5ead8;
-  --color-surface: #ebddc5;
-  --color-text: #201e1d;
-  --color-accent: #c67139;
-  --color-accent-2: #7a8a5e;
-  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+  --color-bg: #f8f1e4;
+  --color-surface: #efe3cd;
+  --color-text: #241813;
+  --color-accent: #7a1f2b;
+  --color-accent-2: #a9823f;
+  --color-divider: color-mix(in srgb, #241813 14%, transparent);
 
   /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
      same step of any role matches the others in visual value. */
-  --color-neutral-100: #f9f4ed;
-  --color-neutral-200: #eee7db;
-  --color-neutral-300: #dcd3c4;
-  --color-neutral-400: #c0b6a5;
-  --color-neutral-500: #a19786;
-  --color-neutral-600: #82796a;
-  --color-neutral-700: #645c50;
-  --color-neutral-800: #474238;
-  --color-neutral-900: #2e2b25;
+  --color-neutral-100: #fbf6ec;
+  --color-neutral-200: #f1e8d6;
+  --color-neutral-300: #e2d4b8;
+  --color-neutral-400: #c4b18a;
+  --color-neutral-500: #a4906b;
+  --color-neutral-600: #826f52;
+  --color-neutral-700: #5f503a;
+  --color-neutral-800: #3c3224;
+  --color-neutral-900: #241813;
 
-  --color-accent-100: #fff2eb;
-  --color-accent-200: #ffe1d0;
-  --color-accent-300: #ffc6a5;
-  --color-accent-400: #f6a06b;
-  --color-accent-500: #d67f48;
-  --color-accent-600: #b2622d;
-  --color-accent-700: #8c491a;
-  --color-accent-800: #643312;
-  --color-accent-900: #402310;
+  --color-accent-100: #f7e9e9;
+  --color-accent-200: #edd0d2;
+  --color-accent-300: #d9a3a8;
+  --color-accent-400: #bb6b73;
+  --color-accent-500: #984048;
+  --color-accent-600: #7a1f2b;
+  --color-accent-700: #5c161f;
+  --color-accent-800: #3d0e14;
+  --color-accent-900: #22080b;
 
-  --color-accent-2-100: #f0fae1;
-  --color-accent-2-200: #e1eecc;
-  --color-accent-2-300: #ccdbb2;
-  --color-accent-2-400: #aebf92;
-  --color-accent-2-500: #8fa073;
-  --color-accent-2-600: #728157;
-  --color-accent-2-700: #56633f;
-  --color-accent-2-800: #3d472b;
-  --color-accent-2-900: #272e1b;
+  --color-accent-2-100: #faf3e4;
+  --color-accent-2-200: #f0e2bd;
+  --color-accent-2-300: #e0c889;
+  --color-accent-2-400: #c9a85e;
+  --color-accent-2-500: #a9823f;
+  --color-accent-2-600: #8a6830;
+  --color-accent-2-700: #6b4f25;
+  --color-accent-2-800: #4a371a;
+  --color-accent-2-900: #2a1f0f;
 
-  --font-heading: "Caprasimo", system-ui, sans-serif;
-  --font-heading-weight: 400;
+  --font-heading: "Fraunces", serif;
+  --font-heading-weight: 500;
   --font-body: "Figtree", system-ui, sans-serif;
 
   --space-1: 4.4px;
@@ -52,15 +56,16 @@
   --space-6: 26.4px;
   --space-8: 35.2px;
 
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 28px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 12px;
 
-  /* Elevation — derived from the ground: soft ink-tinted shadows on a
-     light theme, a hairline edge + ambient darkness on a dark one. */
-  --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
-  --shadow-md: 0 3px 10px color-mix(in srgb, #2e2b25 16%, transparent);
-  --shadow-lg: 0 12px 32px color-mix(in srgb, #2e2b25 22%, transparent);
+  /* Elevation — flat and graphic rather than soft-shadowed; hairline
+     borders (see .elev-sm/.elev-md) carry most of the separation instead.
+     shadow-lg is kept for the sheets that float above content. */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: 0 18px 40px color-mix(in srgb, #241813 18%, transparent);
 }
 
 body {
@@ -123,7 +128,10 @@ figcaption {
 }
 .btn svg { display: block; }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-.btn-primary { background: var(--color-accent); color: var(--color-bg); }
+.btn-primary {
+  background: var(--color-accent); color: var(--color-bg);
+  text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+}
 .btn-primary:hover { background: var(--color-accent-600); }
 .btn-primary:active { background: var(--color-accent-700); }
 .btn-secondary { border-color: var(--color-divider); }
@@ -191,19 +199,20 @@ textarea.input { min-height: 90px; resize: vertical; }
   display: flex; align-items: center; gap: 6px; font-size: 11px;
   color: color-mix(in srgb, var(--color-text) 50%, transparent);
 }
-.elev-sm { box-shadow: var(--shadow-sm); }
-.elev-md { box-shadow: var(--shadow-md); }
+.elev-sm { box-shadow: none; border: 1px solid var(--color-divider); }
+.elev-md { box-shadow: none; border: 1px solid var(--color-divider); }
 .elev-lg { box-shadow: var(--shadow-lg); }
 
 /* — tags — */
 .tag {
   display: inline-flex; align-items: center; font-size: 11px;
-  letter-spacing: 0.02em; padding: 3px 10px;
-  border-radius: calc(var(--radius-md) * 0.75);
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600;
+  padding: 3px 9px; border-radius: 0;
+  background: transparent; border: 1px solid currentColor;
 }
-.tag-accent { background: var(--color-accent-100); color: var(--color-accent-800); }
-.tag-accent-2 { background: var(--color-accent-2-100); color: var(--color-accent-2-800); }
-.tag-neutral { background: var(--color-neutral-100); color: var(--color-neutral-800); }
+.tag-accent { background: transparent; border-color: var(--color-accent-500); color: var(--color-accent-500); }
+.tag-accent-2 { background: transparent; border-color: var(--color-accent-2-500); color: var(--color-accent-2-500); }
+.tag-neutral { background: transparent; border-color: var(--color-neutral-600); color: var(--color-neutral-600); }
 .tag-outline { border: 1px solid var(--color-accent); color: var(--color-accent); }
 
 /* — navigation — */
@@ -250,8 +259,8 @@ textarea.input { min-height: 90px; resize: vertical; }
 .dialog-body { font-size: 14px; opacity: 0.85; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
 
-/* — rounded frame: everything softens, small controls go pill — */
-.card, .dialog { border-radius: calc(var(--radius-lg) * 1.15); }
-.btn, .tag, .seg, .input { border-radius: 999px; }
+/* — sharp frame: flat, graphic, no pill shapes — */
+.card, .dialog { border-radius: var(--radius-sm); }
+.btn, .seg, .input { border-radius: var(--radius-sm); }
 .input { padding-inline: 14px; }
 

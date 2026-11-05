@@ -19,8 +19,8 @@ export default function ComposeSheet({ draft, onDraft, kind, onPickKind, suggest
       <div
         style={{
           background: 'var(--color-bg)',
-          borderTopLeftRadius: 36,
-          borderTopRightRadius: 36,
+          borderTopLeftRadius: 12,
+          borderTopRightRadius: 12,
           padding: '22px 22px 30px',
           animation: 'tm-sheet .28s cubic-bezier(.2,.8,.2,1) both',
           boxShadow: 'var(--shadow-lg)',
@@ -45,7 +45,7 @@ export default function ComposeSheet({ draft, onDraft, kind, onPickKind, suggest
                 style={{
                   flex: 'none',
                   cursor: 'pointer',
-                  borderRadius: 999,
+                  borderRadius: 2,
                   fontFamily: 'var(--font-body)',
                   fontSize: 12.5,
                   padding: '8px 15px',
@@ -65,7 +65,7 @@ export default function ComposeSheet({ draft, onDraft, kind, onPickKind, suggest
           placeholder="Thank you, me, for…"
           value={draft}
           onChange={(e) => onDraft(e.target.value)}
-          style={{ marginTop: 14, borderRadius: 26, minHeight: 96, fontSize: 14.5, lineHeight: 1.55, padding: '14px 16px', resize: 'none' }}
+          style={{ marginTop: 14, borderRadius: 2, minHeight: 96, fontSize: 14.5, lineHeight: 1.55, padding: '14px 16px', resize: 'none' }}
         />
         <div style={{ fontSize: 11.5, color: 'var(--color-neutral-600)', margin: '12px 0 7px' }}>Or borrow one</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
@@ -79,7 +79,7 @@ export default function ComposeSheet({ draft, onDraft, kind, onPickKind, suggest
                 cursor: 'pointer',
                 border: '1px solid var(--color-divider)',
                 background: 'var(--color-surface)',
-                borderRadius: 22,
+                borderRadius: 2,
                 padding: '11px 15px',
                 fontFamily: 'var(--font-body)',
                 fontSize: 13,
